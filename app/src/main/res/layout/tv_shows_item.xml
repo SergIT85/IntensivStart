@@ -1,0 +1,56 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
+    xmlns:tools="http://schemas.android.com/tools"
+    android:id="@+id/tv_show_item_content"
+    android:layout_width="wrap_content"
+    android:layout_height="wrap_content"
+    android:orientation="vertical"
+    android:padding="@dimen/material_margin_normal"
+    tools:background="@color/colorPrimary"
+    tools:ignore="RtlHardcoded">
+
+    <com.google.android.material.imageview.ShapeableImageView
+        android:id="@+id/tv_show_image_preview"
+        android:layout_width="match_parent"
+        android:layout_height="@dimen/movie_card_height"
+        android:scaleType="centerCrop"
+        app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize10Percent"
+        tools:background="@color/white"
+        tools:src="@drawable/ic_avatar"
+        />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:padding="@dimen/material_margin_super_small">
+
+        <TextView
+            android:id="@+id/tv_show_description"
+            android:layout_width="271dp"
+            android:layout_height="wrap_content"
+            android:layout_centerVertical="true"
+            android:layout_marginTop="@dimen/material_margin_super_small"
+            android:ellipsize="end"
+            android:maxLines="1"
+            android:textAllCaps="true"
+            android:textColor="@color/white"
+            android:textSize="20sp"
+            tools:text="Мир дикого запада"
+            tools:textColor="@color/white" />
+        <androidx.appcompat.widget.AppCompatRatingBar
+            android:id="@+id/tv_show_movie_rating"
+            style="@style/Base.Widget.AppCompat.RatingBar.Small"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:isIndicator="true"
+            android:numStars="5"
+            android:progressBackgroundTint="@color/colorControlNormal"
+            android:stepSize="0.5"
+            tools:rating="5"
+            android:layout_alignParentRight="true"
+            android:layout_centerVertical="true"/>
+
+    </RelativeLayout>
+
+</LinearLayout>
