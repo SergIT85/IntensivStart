@@ -9,7 +9,7 @@ import ru.androidschool.intensiv.databinding.TvShowsItemBinding
 
 class TvShowsItem(
     private val content: Movie,
-    private val onClick: (muvie: Movie) -> Unit
+    private val onClick: (movie: Movie) -> Unit
 ) : BindableItem<TvShowsItemBinding>() {
     override fun bind(viewBinding: TvShowsItemBinding, position: Int) {
         viewBinding.tvShowDescription.text = content.title
