@@ -28,7 +28,7 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
         savedInstanceState: Bundle?
     ): View? {
         _binding = TvShowsFragmentBinding.inflate(inflater, container, false)
-        return  binding.root
+        return binding.root
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
@@ -36,7 +36,7 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
 
         val listTvShow = MockRepository.getMovies().map {
             TvShowsItem(it) { movie ->
-            openMovieDrtails(movie)
+            openMovieDetails(movie)
             }
         }.toList()
 
@@ -52,7 +52,7 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
         }
     }
 
-    private fun openMovieDrtails(movie: Movie) {
+    private fun openMovieDetails(movie: Movie) {
         val bundle = Bundle()
         bundle.putString(KEY_TITLE, movie.title)
         findNavController().navigate(R.id.movie_details_fragment, bundle, options)
