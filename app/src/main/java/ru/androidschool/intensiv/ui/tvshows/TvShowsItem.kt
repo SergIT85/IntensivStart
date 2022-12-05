@@ -24,7 +24,6 @@ class TvShowsItem(
             .into(viewBinding.tvShowImagePreview)
     }
 
-
     override fun getLayout(): Int = R.layout.tv_shows_item
 
     override fun initializeViewBinding(view: View) = TvShowsItemBinding.bind(view)
