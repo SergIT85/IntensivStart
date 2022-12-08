@@ -74,4 +74,7 @@ dependencies {
     implementation "com.github.lisawray.groupie:groupie-viewbinding:$rootProject.groupieVersion"
 
     implementation "com.jakewharton.timber:timber:$rootProject.timberVersion"
+
+    //like button
+    implementation 'pub.hanks:smallbang:1.2.2'
 }

@@ -1,12 +1,190 @@
-<FrameLayout xmlns:android="http://schemas.android.com/apk/res/android"
+<?xml version="1.0" encoding="utf-8"?>
+<androidx.coordinatorlayout.widget.CoordinatorLayout
+    xmlns:android="http://schemas.android.com/apk/res/android"
+    xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    tools:context="ru.androidschool.intensiv.ui.movie_details.MovieDetailsFragment">
+    android:fitsSystemWindows="true"
+    tools:ignore="RtlHardcoded"
+    >
+    <include
+        layout="@layout/muvie_details_header" />
 
-    <TextView
+
+
+    <androidx.core.widget.NestedScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
-        android:text="@string/hello_blank_fragment" />
+        android:background="@color/blueDark"
+        app:layout_behavior="@string/appbar_scrolling_view_behavior">
 
-</FrameLayout>
+
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent">
+
+                <TextView
+                    android:id="@+id/name_films_in_details"
+                    android:layout_width="306dp"
+                    android:layout_height="wrap_content"
+                    android:layout_marginStart="@dimen/material_margin_large"
+                    android:layout_marginTop="@dimen/material_margin_normal"
+                    android:layout_marginEnd="@dimen/material_margin_normal"
+                    android:layout_marginBottom="@dimen/material_margin_normal"
+                    android:padding="@dimen/material_margin_super_small"
+                    android:text="NAME FILMS"
+                    android:textColor="@color/white"
+                    android:textSize="20sp"
+                    android:textStyle="bold" />
+
+                <xyz.hanks.library.bang.SmallBangView
+
+                    android:id="@+id/imageViewAnimation"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentTop="true"
+                    android:layout_alignParentRight="true">
+
+                    <ImageView
+                        android:id="@+id/imageView"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_gravity="center"
+
+                        android:src="@drawable/heart_selector" />
+                </xyz.hanks.library.bang.SmallBangView>
+
+                <Button
+                    android:id="@+id/details_button_start"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name_films_in_details"
+                    android:layout_marginLeft="@dimen/material_margin_large"
+                    android:inputType="textCapWords"
+                    android:text="Смотреть" />
+
+                <androidx.appcompat.widget.AppCompatRatingBar
+                    android:id="@+id/detail_movie_rating"
+                    style="@style/Base.Widget.AppCompat.RatingBar.Small"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/name_films_in_details"
+                    android:layout_alignParentRight="true"
+                    android:layout_marginStart="@dimen/material_margin_normal"
+                    android:layout_marginTop="@dimen/material_margin_normal"
+                    android:layout_marginEnd="@dimen/material_margin_normal"
+                    android:layout_marginBottom="@dimen/material_margin_normal"
+                    android:isIndicator="true"
+                    android:numStars="5"
+                    android:progressBackgroundTint="@color/colorControlNormal"
+                    android:stepSize="0.5"
+                    tools:rating="5" />
+
+                <TextView
+                    android:id="@+id/description_movie_details"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/details_button_start"
+                    android:layout_marginStart="@dimen/material_margin_large"
+                    android:layout_marginLeft="@dimen/material_margin_large"
+                    android:layout_marginTop="@dimen/material_margin_large"
+                    android:layout_marginEnd="@dimen/material_margin_large"
+                    android:layout_marginRight="@dimen/material_margin_large"
+                    android:layout_marginBottom="@dimen/material_margin_large"
+                    android:ellipsize="end"
+                    android:maxLines="6"
+                    android:text="Допустим, есть TextView, состоящий из 20 строк. Я же хочу, чтобы в Activity отображалась только часть (например, 3 строчки), а остальное появлялось в этом же Activity при нажатии на текст. Как это можно сделать? Я знаю, что это можно сделать, обрезав текст и обработать нажатие на TextView, показав при нажатии текст полностью. А есть ли другие инструменты (может быть, что-то есть уже встроенное)?"
+                    android:textColor="@color/white"
+                    android:textSize="16sp" />
+
+                <androidx.recyclerview.widget.RecyclerView
+                    android:id="@+id/items_container_actor"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_below="@id/description_movie_details"
+                    android:layout_marginStart="12dp"
+                    android:layout_marginEnd="12dp"
+                    android:orientation="horizontal"
+                    android:visibility="visible"
+                    app:layoutManager="androidx.recyclerview.widget.LinearLayoutManager"
+                    tools:ignore="RtlSymmetry"
+                    tools:itemCount="4"
+                    tools:listitem="@layout/item_avatar_actor" />
+
+
+                <TableLayout xmlns:android="http://schemas.android.com/apk/res/android"
+                    android:layout_width="@dimen/avatar_height_text"
+                    android:layout_height="match_parent"
+                    android:stretchColumns="1"
+                    android:layout_marginTop="@dimen/material_margin_small"
+                    android:layout_below="@id/items_container_actor">
+                    <TableRow>
+
+                        <TextView
+
+                            android:text="Студия"
+                            android:layout_marginStart="@dimen/material_margin_large"
+                            android:textColor="@color/white"
+                            android:layout_marginEnd="@dimen/material_margin_normal"
+                            android:gravity="left"
+                            android:textStyle="bold"
+                             />
+                        <TextView
+                            android:id="@+id/studio_muvie_details"
+                            android:text="Worn Br"
+                            android:gravity="left"
+                            android:textColor="@color/white"
+                            android:padding="3dip" />
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:text="Жанр"
+                            android:gravity="left"
+                            android:layout_marginStart="@dimen/material_margin_large"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="@dimen/material_margin_normal"
+                            android:padding="3dip" />
+                        <TextView
+                            android:id="@+id/genre_muvie_details"
+                            android:text="Action,...."
+                            android:gravity="left"
+                            android:textColor="@color/white"
+                            android:padding="3dip" />
+                    </TableRow>
+
+                    <TableRow>
+                        <TextView
+                            android:text="Год"
+                            android:gravity="left"
+                            android:layout_marginStart="@dimen/material_margin_large"
+                            android:textColor="@color/white"
+                            android:textStyle="bold"
+                            android:layout_marginEnd="@dimen/material_margin_normal"
+                            android:padding="3dip" />
+                        <TextView
+                            android:id="@+id/year_muvie_details"
+                            android:text="1999"
+                            android:gravity="left"
+                            android:textColor="@color/white"
+                            android:padding="3dip" />
+                    </TableRow>
+                </TableLayout>
+
+
+            </RelativeLayout>
+
+
+
+
+
+
+
+    </androidx.core.widget.NestedScrollView>
+
+
+
+</androidx.coordinatorlayout.widget.CoordinatorLayout>

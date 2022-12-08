@@ -9,6 +9,9 @@
 
     <!-- Avatar -->
     <dimen name="avatar_size">120dp</dimen>
+    <dimen name="small_avatar_size">60dp</dimen>
+    <dimen name="avatar_text_width">60dp</dimen>
+    <dimen name="avatar_height_text">270dp</dimen>
 
     <!-- Movie Card Item -->
     <dimen name="movie_card_width">130dp</dimen>
@@ -19,5 +22,9 @@
     <dimen name="dimens_32">32dp</dimen>
     <dimen name="search_bar_height">56dp</dimen>
     <dimen name="min_height">100dp</dimen>
+
+    <!-- Movie Card Item -->
+    <dimen name="up_bar_layout">250dp</dimen>
+    <dimen name="up_bar_image">210dp</dimen>
 
 </resources>
