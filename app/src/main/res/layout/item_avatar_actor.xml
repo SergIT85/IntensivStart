@@ -16,11 +16,11 @@
         android:id="@+id/avatar_actor"
         android:layout_width="@dimen/small_avatar_size"
         android:layout_height="@dimen/small_avatar_size"
+        android:layout_marginLeft="@dimen/material_margin_normal"
+        android:layout_marginRight="@dimen/material_margin_normal"
         android:scaleType="centerCrop"
         app:shapeAppearanceOverlay="@style/ShapeAppearanceOverlay.App.CornerSize50Percent"
         tools:background="@color/white"
-        android:layout_marginRight="@dimen/material_margin_normal"
-        android:layout_marginLeft="@dimen/material_margin_normal"
         tools:src="@drawable/ic_avatar" />
 
     <TextView

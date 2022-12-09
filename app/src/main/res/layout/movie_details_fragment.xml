@@ -9,7 +9,7 @@
     tools:ignore="RtlHardcoded"
     >
     <include
-        layout="@layout/muvie_details_header" />
+        layout="@layout/movie_details_header" />
 
 
 
@@ -41,14 +41,14 @@
 
                 <xyz.hanks.library.bang.SmallBangView
 
-                    android:id="@+id/imageViewAnimation"
+                    android:id="@+id/imageViewAnimationLike"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:layout_alignParentTop="true"
                     android:layout_alignParentRight="true">
 
                     <ImageView
-                        android:id="@+id/imageView"
+                        android:id="@+id/imageViewLike"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_gravity="center"
@@ -132,7 +132,7 @@
                             android:textStyle="bold"
                              />
                         <TextView
-                            android:id="@+id/studio_muvie_details"
+                            android:id="@+id/studio_movie_details"
                             android:text="Worn Br"
                             android:gravity="left"
                             android:textColor="@color/white"
@@ -149,7 +149,7 @@
                             android:layout_marginEnd="@dimen/material_margin_normal"
                             android:padding="3dip" />
                         <TextView
-                            android:id="@+id/genre_muvie_details"
+                            android:id="@+id/genre_movie_details"
                             android:text="Action,...."
                             android:gravity="left"
                             android:textColor="@color/white"
@@ -166,7 +166,7 @@
                             android:layout_marginEnd="@dimen/material_margin_normal"
                             android:padding="3dip" />
                         <TextView
-                            android:id="@+id/year_muvie_details"
+                            android:id="@+id/year_movie_details"
                             android:text="1999"
                             android:gravity="left"
                             android:textColor="@color/white"

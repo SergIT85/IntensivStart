@@ -55,9 +55,11 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
     private fun openMovieDetails(movie: Movie) {
         val bundle = Bundle()
         bundle.putString(KEY_TITLE, movie.title)
+        bundle.putFloat(RATING, movie.rating)
         findNavController().navigate(R.id.movie_details_fragment, bundle, options)
     }
     companion object {
+        const val RATING = "rating"
         const val KEY_TITLE = "title"
     }
 }

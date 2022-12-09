@@ -36,10 +36,8 @@
                 android:layout_height="@dimen/up_bar_image"
                 android:orientation="vertical">
 
-
-
-
                 <androidx.appcompat.widget.Toolbar
+                    android:id="@+id/header_toolbar_details"
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:gravity="center"
@@ -54,7 +52,7 @@
 
                         <com.google.android.material.floatingactionbutton.FloatingActionButton
                             android:enabled="false"
-                            android:id="@+id/muvie_header_back_arrow"
+                            android:id="@+id/movie_header_back_arrow"
                             android:layout_width="wrap_content"
                             android:layout_height="wrap_content"
                             android:layout_margin="@dimen/material_margin_super_small"
