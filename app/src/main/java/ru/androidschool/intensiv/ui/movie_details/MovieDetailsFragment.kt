@@ -29,7 +29,7 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         inflater: LayoutInflater,
         container: ViewGroup?,
         savedInstanceState: Bundle?
-    ): View? {
+    ): View {
         _binding = MovieDetailsFragmentBinding.inflate(inflater, container, false)
         _headerBinding = MovieDetailsHeaderBinding.bind(binding.root)
         return binding.root
@@ -50,45 +50,41 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
 
         val movieDescription = arguments?.getString("title")
         val textView = binding.descriptionMovieDetails
-        binding.descriptionMovieDetails.text = "Тут показывает много текста так что надо это " +
-                "написать, плюс текст разворачивается если на него нажать это надо обязательно " +
-                "проверить. кстати надо обработать нажание на него, а пока я передал сюда " +
-                "наименование фильма через arguments $movieDescription"
+        binding.descriptionMovieDetails.text = getString(R.string.placeholder_description,
+            movieDescription)
 
+
+        val quantityTermDescription = 6
         var flag = true
         textView.setOnClickListener {
             if (flag) {
                 textView.maxLines = Int.MAX_VALUE
                 flag = false
             } else {
-                textView.maxLines = 6
+                textView.maxLines = quantityTermDescription
                 flag = true
             }
         }
 
-        binding.detailMovieRating.rating = arguments?.getFloat("rating")!!
+        val ratingNull = 5F
+        binding.detailMovieRating.rating = arguments?.getFloat("rating") ?: ratingNull
 
         val likeMovie = binding.imageViewLike
         likeMovie.setOnClickListener {
-            if (likeMovie.isSelected) {
-                likeMovie.isSelected = false
-            } else {
-                likeMovie.animation
-                likeMovie.isSelected = true
-            }
+            likeMovie.isSelected = !likeMovie.isSelected
         }
 
         binding.detailsButtonStart.setOnClickListener {
-            Toast.makeText(context, "Начался просмотр фильма.", Toast.LENGTH_SHORT).show()
+            Toast.makeText(context, getString(R.string.placeholder_start_film), Toast.LENGTH_SHORT).show()
         }
 
-        binding.studioMovieDetails.text = "Наименование студии"
-        binding.genreMovieDetails.text = "Жанр фильма"
-        binding.yearMovieDetails.text = "Год выпуска фильмы"
+        binding.studioMovieDetails.text = getString(R.string.placeholder_studio)
+        binding.genreMovieDetails.text = getString(R.string.placeholder_genre)
+        binding.yearMovieDetails.text = getString(R.string.placeholder_year)
 
         val listActor = MockRepository.getMovies().map {
             ActorItem(it) {
-                Toast.makeText(context, "Открывается описание актёра", Toast.LENGTH_SHORT).show()
+                Toast.makeText(context, getString(R.string.placeholder_start_actor), Toast.LENGTH_SHORT).show()
             }
         }.toList()
 

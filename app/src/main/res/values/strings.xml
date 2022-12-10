@@ -26,4 +26,18 @@
 
     <string name="hello_blank_fragment">Hello blank fragment</string>
     <string name="placeholder">Пёс Киноман</string>
+
+    <!-- For movie details -->
+    <string name="placeholder_description">Тут показывает много текста так что надо это
+        написать, плюс текст разворачивается если на него нажать это надо обязательно
+        проверить. кстати надо обработать нажание на него, а пока я передал сюда
+        наименование фильма через arguments %1$s</string>
+    <string name="placeholder_studio">WB</string>
+    <string name="placeholder_genre">Action</string>
+    <string name="placeholder_year">1999</string>
+    <string name="placeholder_start_film">Начался просмотр фильма.</string>
+    <string name="placeholder_start_actor">Открывается описание актёра</string>
+
+
+
 </resources>
