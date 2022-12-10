@@ -1,0 +1,168 @@
+[33m11ae137[m[33m ([m[1;36mHEAD -> [m[1;32mhomework-2[m[33m, [m[1;31morigin/homework-2[m[33m)[m HEAD@{0}: rebase (finish): returning to refs/heads/homework-2
+[33m11ae137[m[33m ([m[1;36mHEAD -> [m[1;32mhomework-2[m[33m, [m[1;31morigin/homework-2[m[33m)[m HEAD@{1}: rebase (start): checkout 11ae137aa67200fb2aa79a590e10cf43e36ff703
+[33ma683923[m HEAD@{2}: commit: Initial commit/
+[33m11ae137[m[33m ([m[1;36mHEAD -> [m[1;32mhomework-2[m[33m, [m[1;31morigin/homework-2[m[33m)[m HEAD@{3}: checkout: moving from master to homework-2
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{4}: checkout: moving from homework-2 to master
+[33m11ae137[m[33m ([m[1;36mHEAD -> [m[1;32mhomework-2[m[33m, [m[1;31morigin/homework-2[m[33m)[m HEAD@{5}: checkout: moving from homework-2 to homework-2
+[33m11ae137[m[33m ([m[1;36mHEAD -> [m[1;32mhomework-2[m[33m, [m[1;31morigin/homework-2[m[33m)[m HEAD@{6}: branch: Reset to origin/homework-2
+[33m11ae137[m[33m ([m[1;36mHEAD -> [m[1;32mhomework-2[m[33m, [m[1;31morigin/homework-2[m[33m)[m HEAD@{7}: commit: Initial commit/
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{8}: checkout: moving from master to homework-2
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{9}: rebase (abort): updating HEAD
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{10}: rebase (abort): updating HEAD
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{11}: checkout: moving from master to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{12}: branch: Reset to origin/master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{13}: checkout: moving from homework-2 to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{14}: checkout: moving from master to homework-2
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{15}: checkout: moving from YY to master
+[33mfe8d155[m HEAD@{16}: merge master: Merge made by the 'ours' strategy.
+[33mc2ccf8f[m HEAD@{17}: reset: moving to HEAD
+[33mc2ccf8f[m HEAD@{18}: commit: Initial commit/
+[33mf9b3da8[m HEAD@{19}: cherry-pick: Initial commit/
+[33m73a43cf[m HEAD@{20}: checkout: moving from master to YY
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{21}: checkout: moving from Y to master
+[33m73a43cf[m HEAD@{22}: checkout: moving from master to Y
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{23}: checkout: moving from homework-2 to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{24}: reset: moving to 1d28bcd
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{25}: checkout: moving from master to homework-2
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{26}: checkout: moving from homework-2 to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{27}: checkout: moving from homework-2 to homework-2
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{28}: branch: Reset to origin/homework-2
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{29}: checkout: moving from master to homework-2
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{30}: checkout: moving from master to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{31}: branch: Reset to origin/master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{32}: checkout: moving from 7fcd236fb05f541b4570c5a77f7979f682e117fc to master
+[33m7fcd236[m HEAD@{33}: commit: Initial commit/
+[33mf6bebd7[m HEAD@{34}: commit: Initial commit/
+[33me456cc2[m HEAD@{35}: rebase (start): checkout HEAD~5
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{36}: merge home-work-1-tv-shows: Fast-forward
+[33m73a43cf[m HEAD@{37}: checkout: moving from home-work-1-tv-shows to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{38}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{39}: branch: Reset to origin/home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{40}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{41}: branch: Reset to origin/home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{42}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{43}: branch: Reset to origin/home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{44}: checkout: moving from master to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{45}: checkout: moving from home-work-1-tv-shows to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{46}: checkout: moving from master to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{47}: checkout: moving from home-work-1-tv-shows to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{48}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{49}: branch: Reset to origin/home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{50}: checkout: moving from master to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{51}: checkout: moving from home-work-1-tv-shows to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{52}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{53}: branch: Reset to origin/home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{54}: checkout: moving from master to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{55}: checkout: moving from home-work-1-tv-shows to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{56}: checkout: moving from master to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{57}: checkout: moving from home-work-1-tv-shows to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{58}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{59}: branch: Reset to origin/home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{60}: checkout: moving from master to home-work-1-tv-shows
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{61}: rebase (finish): returning to refs/heads/master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{62}: rebase (start): checkout origin/home-work-1-tv-shows
+[33m73a43cf[m HEAD@{63}: checkout: moving from home-work-1-tv-shows to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{64}: checkout: moving from master to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{65}: checkout: moving from master to master
+[33m73a43cf[m HEAD@{66}: branch: Reset to origin/master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{67}: merge origin/home-work-1-tv-shows: Fast-forward
+[33m73a43cf[m HEAD@{68}: checkout: moving from home-work-1-tv-shows to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{69}: checkout: moving from master to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{70}: checkout: moving from master to master
+[33m73a43cf[m HEAD@{71}: branch: Reset to origin/master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{72}: rebase (abort): updating HEAD
+[33m8866503[m HEAD@{73}: rebase (continue): Initial commit/
+[33me456cc2[m HEAD@{74}: rebase (start): checkout origin/master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{75}: merge origin/home-work-1-tv-shows: Fast-forward
+[33m73a43cf[m HEAD@{76}: checkout: moving from home-work-1-tv-shows to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{77}: checkout: moving from master to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{78}: rebase (finish): returning to refs/heads/master
+[33m73a43cf[m HEAD@{79}: rebase (start): checkout origin/master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{80}: checkout: moving from master to home-work-1-tv-shows
+[33mc11054e[m HEAD@{81}: checkout: moving from home-work-1-tv-shows to master
+[33m1d28bcd[m[33m ([m[1;31morigin/master[m[33m, [m[1;32mmaster[m[33m)[m HEAD@{82}: commit: Initial commit/
+[33mdb3d2f9[m HEAD@{83}: commit: Initial commit/
+[33m0feed68[m HEAD@{84}: commit: Initial commit/
+[33md2be895[m HEAD@{85}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33md2be895[m HEAD@{86}: branch: Reset to origin/home-work-1-tv-shows
+[33md2be895[m HEAD@{87}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33md2be895[m HEAD@{88}: branch: Reset to origin/home-work-1-tv-shows
+[33md2be895[m HEAD@{89}: commit: Initial commit/
+[33m5e6cba6[m HEAD@{90}: commit (merge): Merge remote-tracking branch 'origin/home-work-1-tv-shows' into home-work-1-tv-shows
+[33me456cc2[m HEAD@{91}: commit: Initial commit/
+[33m4ab6514[m HEAD@{92}: rebase (continue) (finish): returning to refs/heads/home-work-1-tv-shows
+[33m4ab6514[m HEAD@{93}: rebase (continue) (squash): Initial commit/
+[33m53f3ca4[m HEAD@{94}: rebase (continue) (squash): # This is a combination of 6 commits.
+[33m9bd7beb[m HEAD@{95}: rebase (continue) (squash): # This is a combination of 5 commits.
+[33m0938931[m HEAD@{96}: rebase (continue) (squash): # This is a combination of 4 commits.
+[33m027744f[m HEAD@{97}: rebase (continue) (squash): # This is a combination of 3 commits.
+[33m20cffe1[m HEAD@{98}: rebase (continue) (squash): # This is a combination of 2 commits.
+[33m2c1532f[m HEAD@{99}: rebase (continue): Initial commit/
+[33m3e42af2[m HEAD@{100}: rebase (start): checkout HEAD~8
+[33m48ba309[m HEAD@{101}: rebase (finish): returning to refs/heads/home-work-1-tv-shows
+[33m48ba309[m HEAD@{102}: rebase (squash): Initial commit/
+[33mcb646a9[m HEAD@{103}: rebase (squash): # This is a combination of 4 commits.
+[33m91baa9a[m HEAD@{104}: rebase (squash): # This is a combination of 3 commits.
+[33m2c3caaf[m HEAD@{105}: rebase (squash): # This is a combination of 2 commits.
+[33m595c179[m HEAD@{106}: rebase (start): checkout HEAD~5
+[33ma9e3c6c[m HEAD@{107}: rebase (abort): updating HEAD
+[33ma9e3c6c[m HEAD@{108}: rebase (abort): updating HEAD
+[33ma9e3c6c[m HEAD@{109}: rebase (abort): updating HEAD
+[33ma9e3c6c[m HEAD@{110}: rebase (abort): updating HEAD
+[33ma9e3c6c[m HEAD@{111}: commit: Initial commit/
+[33m30e0416[m HEAD@{112}: commit: Initial commit/
+[33mf383a5a[m HEAD@{113}: commit: Initial commit/
+[33m2783799[m HEAD@{114}: commit: Initial commit/
+[33m595c179[m HEAD@{115}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33m595c179[m HEAD@{116}: branch: Reset to origin/home-work-1-tv-shows
+[33m595c179[m HEAD@{117}: commit: Initial commit/
+[33mb8580f6[m HEAD@{118}: commit: Initial commit/
+[33m88ccd46[m HEAD@{119}: commit: Initial commit/
+[33m0cd61e2[m HEAD@{120}: checkout: moving from mew_test to home-work-1-tv-shows
+[33m32de1e3[m HEAD@{121}: commit: Initial commit/
+[33m73a43cf[m HEAD@{122}: checkout: moving from home-work-1-tv-shows to mew_test
+[33m0cd61e2[m HEAD@{123}: commit: Initial commit/
+[33m34030a5[m HEAD@{124}: commit: Initial commit/
+[33mefd4168[m HEAD@{125}: commit: Initial commit/
+[33m7b84fc1[m HEAD@{126}: cherry-pick: Initial commit/
+[33m3e42af2[m HEAD@{127}: commit: Initial commit/
+[33m336669e[m HEAD@{128}: commit: Initial commit/
+[33mfaaf95e[m HEAD@{129}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33mfaaf95e[m HEAD@{130}: branch: Reset to origin/home-work-1-tv-shows
+[33mfaaf95e[m HEAD@{131}: checkout: moving from home-work-1-tvshows to home-work-1-tv-shows
+[33mfaaf95e[m HEAD@{132}: checkout: moving from home-work-1-tv-shows to home-work-1-tvshows
+[33mfaaf95e[m HEAD@{133}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33mfaaf95e[m HEAD@{134}: branch: Reset to origin/home-work-1-tv-shows
+[33mfaaf95e[m HEAD@{135}: checkout: moving from home-work-1-tvshows_ to home-work-1-tv-shows
+[33mfaaf95e[m HEAD@{136}: checkout: moving from home-work-1-tvshows to home-work-1-tvshows_
+[33mfaaf95e[m HEAD@{137}: checkout: moving from home-work-1-tv-shows to home-work-1-tvshows
+[33mfaaf95e[m HEAD@{138}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33mfaaf95e[m HEAD@{139}: branch: Reset to origin/home-work-1-tv-shows
+[33m5611014[m HEAD@{140}: checkout: moving from home-work-1-tvshows_ to home-work-1-tv-shows
+[33mfaaf95e[m HEAD@{141}: checkout: moving from home-work-1-tv-shows to home-work-1-tvshows_
+[33m5611014[m HEAD@{142}: checkout: moving from home-work-1-tvshows to home-work-1-tv-shows
+[33mfaaf95e[m HEAD@{143}: checkout: moving from home-work-1-tv-shows to home-work-1-tvshows
+[33m5611014[m HEAD@{144}: commit: Initial commit/
+[33ma6a1828[m HEAD@{145}: commit: Initial commit/
+[33mfaaf95e[m HEAD@{146}: commit: Initial commit/
+[33m73a43cf[m HEAD@{147}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{148}: branch: Reset to origin/home-work-1-tv-shows
+[33m73a43cf[m HEAD@{149}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{150}: branch: Reset to origin/home-work-1-tv-shows
+[33m73a43cf[m HEAD@{151}: checkout: moving from master to home-work-1-tv-shows
+[33mc11054e[m HEAD@{152}: checkout: moving from home-work-1-tv-shows to master
+[33m73a43cf[m HEAD@{153}: checkout: moving from home-work-1-tv-shows to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{154}: branch: Reset to origin/home-work-1-tv-shows
+[33m7384795[m HEAD@{155}: commit (amend): Initial commit/
+[33mf89860a[m HEAD@{156}: commit: Initial commit/
+[33mfc1230e[m HEAD@{157}: reset: moving to fc1230e573ef29948de9ca04d4aaa5b5e3a43c62
+[33mfc1230e[m HEAD@{158}: reset: moving to fc1230e573ef29948de9ca04d4aaa5b5e3a43c62
+[33mfc1230e[m HEAD@{159}: checkout: moving from master to home-work-1-tv-shows
+[33mc11054e[m HEAD@{160}: commit (amend): Initial commit/ Ffirst publication
+[33m9bfae6c[m HEAD@{161}: commit (amend): Initial commit/ Ffirst publication
+[33m73a43cf[m HEAD@{162}: checkout: moving from home-work-1-tv-shows to master
+[33mfc1230e[m HEAD@{163}: commit (amend): Initial commit/ First publication
+[33m73a43cf[m HEAD@{164}: reset: moving to 73a43cf8ad4694acdf4eb9f0337ccee5ff1acf67
+[33m73a43cf[m HEAD@{165}: reset: moving to 73a43cf8ad4694acdf4eb9f0337ccee5ff1acf67
+[33m73a43cf[m HEAD@{166}: checkout: moving from master to home-work-1-tv-shows
+[33m73a43cf[m HEAD@{167}: commit (initial): Initial commit/ Ffirst publication
