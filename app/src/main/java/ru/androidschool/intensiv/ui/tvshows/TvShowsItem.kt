@@ -12,15 +12,16 @@ class TvShowsItem(
     private val onClick: (movie: Movie) -> Unit
 ) : BindableItem<TvShowsItemBinding>() {
     override fun bind(viewBinding: TvShowsItemBinding, position: Int) {
-        viewBinding.tvShowDescription.text = content.title
+        viewBinding.tvShowDescription.text = content.name
         viewBinding.tvShowMovieRating.rating = content.rating
         viewBinding.tvShowItemContent.setOnClickListener {
             onClick.invoke(content)
         }
 
         Picasso.get()
-            .load("https://m.media-amazon.com/images/M/MV5BYTk3MDljOWQtNGI2My00OTEzLTlhY" +
-                    "jQtOTQ4ODM2MzUwY2IwXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_.jpg")
+            .load(content.posterPath)
+            .fit()
+            .centerCrop()
             .into(viewBinding.tvShowImagePreview)
     }
 
