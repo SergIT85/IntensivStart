@@ -4,21 +4,22 @@ import android.view.View
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.viewbinding.BindableItem
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.Movie
+import ru.androidschool.intensiv.data.ActorCast
 import ru.androidschool.intensiv.databinding.ItemAvatarActorBinding
 
 class ActorItem(
-    private val content: Movie,
-    private val onClick: (movie: Movie) -> Unit
+    private val content: ActorCast,
+    private val onClick: (movie: ActorCast) -> Unit
 ) : BindableItem<ItemAvatarActorBinding>() {
     override fun bind(viewBinding: ItemAvatarActorBinding, position: Int) {
-        viewBinding.description.text = content.title
+        viewBinding.description.text = content.name
         viewBinding.avatarActor.setOnClickListener {
             onClick.invoke(content)
         }
         Picasso.get()
-            .load("https://m.media-amazon.com/images/M/MV5BYTk3MDljOWQtNGI2My00OTEzLTlhYjQtO" +
-                    "TQ4ODM2MzUwY2IwXkEyXkFqcGdeQXVyNTIzOTk5ODM@._V1_.jpg")
+            .load(content.profilePath)
+            .fit()
+            .centerCrop()
             .into(viewBinding.avatarActor)
     }
 
