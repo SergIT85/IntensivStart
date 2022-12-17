@@ -32,9 +32,10 @@
         написать, плюс текст разворачивается если на него нажать это надо обязательно
         проверить. кстати надо обработать нажание на него, а пока я передал сюда
         наименование фильма через arguments %1$s</string>
-    <string name="placeholder_studio">WB</string>
-    <string name="placeholder_genre">Action</string>
-    <string name="placeholder_year">1999</string>
+    <string name="placeholder_data">Нет данных</string>
+    <string name="placeholder_studio">Нет данных</string>
+    <string name="placeholder_genre">Нет данных</string>
+    <string name="placeholder_year">Нет данных</string>
     <string name="placeholder_start_film">Начался просмотр фильма.</string>
     <string name="placeholder_start_actor">Открывается описание актёра</string>
 

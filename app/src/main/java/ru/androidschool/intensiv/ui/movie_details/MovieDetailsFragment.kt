@@ -1,21 +1,19 @@
 package ru.androidschool.intensiv.ui.movie_details
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import android.widget.Toast
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.androidschool.intensiv.MainActivity
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.ActorResponse
-import ru.androidschool.intensiv.data.MovieDetails
 import ru.androidschool.intensiv.databinding.MovieDetailsFragmentBinding
 import ru.androidschool.intensiv.databinding.MovieDetailsHeaderBinding
 import ru.androidschool.intensiv.network.MovieApiClient
@@ -43,6 +41,7 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         return binding.root
     }
 
+    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -64,7 +63,6 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         // Устанавливаем Название
         val movieTitle = requireArguments().getString("title")
 
-        Timber.tag("TAGIIIIIII").e("listTvShow ============== $movieTitle")
         binding.nameFilmsInDetails.text = movieTitle
 
         // Устанавливаем описание
@@ -101,41 +99,48 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         val getMovieDetails = MovieApiClient.apiClient.getMovieDetails(
             requireArguments().getInt(ID)
         )
-        getMovieDetails.enqueue(object : Callback<MovieDetails> {
-            override fun onFailure(call: Call<MovieDetails>, t: Throwable) {
-                Timber.tag("TAGERROR").e(t.toString())
-            }
+        getMovieDetails
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ detail ->
+                val studio = detail.productionCompanies
+                val genre = detail.genres
+                val releaseDate = detail.releaseDate
 
-            override fun onResponse(call: Call<MovieDetails>, response: Response<MovieDetails>) {
-                val studios = response.body()?.productionCompanies
-                val genre = response.body()?.genres?.get(0)?.name.toString()
-
-                Timber.tag("TAGGGGGG").e("studio -!!!!!!!!!!!!!------ $studios")
-                if (studios != null && studios.isNotEmpty()) {
-                        binding.studioMovieDetails.text = studios[0].name.toString()
+                if (studio.isNotEmpty()) {
+                    binding.studioMovieDetails.text = studio[0].name.toString()
+                } else {
+                    binding.studioMovieDetails.text = R.string.placeholder_data.toString()
                 }
-                binding.genreMovieDetails.text = genre
-                binding.yearMovieDetails.text = response.body()?.releaseDate.toString()
-            }
-        })
+
+                if (genre.isNotEmpty()) {
+                    binding.genreMovieDetails.text = genre[0].name.toString()
+                } else {
+                    binding.genreMovieDetails.text = R.string.placeholder_data.toString()
+                }
+
+                binding.yearMovieDetails.text = releaseDate.toString()
+            }, { error ->
+                // Логируем ошибку
+                Timber.tag("TAGERROR").e(error.toString())
+            })
 
         // Список актёров.
         val getCastActor = MovieApiClient.apiClient.getCastActor(
             requireArguments().getInt(ID))
-        getCastActor.enqueue(object : Callback<ActorResponse> {
-            override fun onResponse(call: Call<ActorResponse>, response: Response<ActorResponse>) {
-                val actor = response.body()!!.cast
+        getCastActor
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ actor ->
+                val movieActor = actor.cast
 
-                val actorList = actor.map {
+                val actorList = movieActor.map {
                     ActorItem(it) { }
                 }.toList()
-
                 binding.itemsContainerActor.adapter = adapter.apply { addAll(actorList) }
-            }
-
-            override fun onFailure(call: Call<ActorResponse>, t: Throwable) {
-                Timber.tag("TAGERROR").e(t.toString())
-            }
-        })
+            }, { error ->
+                // Логируем ошибку
+                Timber.tag("TAGERROR").e(error.toString())
+            })
     }
 }
