@@ -10,19 +10,19 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.disposables.CompositeDisposable
 import ru.androidschool.intensiv.BuildConfig.THE_MOVIE_DATABASE_API
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.MockRepository
 import ru.androidschool.intensiv.data.Movie
 import ru.androidschool.intensiv.databinding.TvShowsFragmentBinding
+import ru.androidschool.intensiv.extension.extSingle
 import ru.androidschool.intensiv.network.MovieApiClient
 import timber.log.Timber
 
 class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
     private var _binding: TvShowsFragmentBinding? = null
     private val binding get() = _binding!!
+    private val compositeDisposable = CompositeDisposable()
 
     private val adapter by lazy {
         GroupAdapter<GroupieViewHolder>()
@@ -46,9 +46,8 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
 
         lateinit var tvShows: List<Movie>
 
-        getTvPopular
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        compositeDisposable.add(getTvPopular
+            .extSingle()
             .subscribe({ shows ->
                 val tvShows = shows.results
 
@@ -61,14 +60,12 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
             }, { error ->
                 // Логируем ошибку
                 Timber.tag("TAGERROR").e(error.toString())
-            })
+            }))
+    }
 
-        val listTvShow = MockRepository.getMovies().map {
-            TvShowsItem(it) { movie ->
-                openMovieDetails(movie)
-            }
-        }.toList()
-        Timber.tag("TAGIIIIIII").e("listTvShow ============== $listTvShow.toString()")
+    override fun onStop() {
+        super.onStop()
+        compositeDisposable.clear()
     }
 
     private val options = navOptions {

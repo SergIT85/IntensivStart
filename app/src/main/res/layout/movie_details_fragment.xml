@@ -95,7 +95,7 @@
                     android:layout_marginBottom="@dimen/material_margin_large"
                     android:ellipsize="end"
                     android:maxLines="6"
-                    android:text="Допустим, есть TextView, состоящий из 20 строк. Я же хочу, чтобы в Activity отображалась только часть (например, 3 строчки), а остальное появлялось в этом же Activity при нажатии на текст. Как это можно сделать? Я знаю, что это можно сделать, обрезав текст и обработать нажатие на TextView, показав при нажатии текст полностью. А есть ли другие инструменты (может быть, что-то есть уже встроенное)?"
+                    android:text="@string/placeholder_data"
                     android:textColor="@color/white"
                     android:textSize="16sp" />
 
@@ -133,7 +133,7 @@
                              />
                         <TextView
                             android:id="@+id/studio_movie_details"
-                            android:text="Worn Br"
+                            android:text="@string/placeholder_data"
                             android:gravity="left"
                             android:textColor="@color/white"
                             android:padding="3dip" />
@@ -150,7 +150,7 @@
                             android:padding="3dip" />
                         <TextView
                             android:id="@+id/genre_movie_details"
-                            android:text="Action,...."
+                            android:text="@string/placeholder_data"
                             android:gravity="left"
                             android:textColor="@color/white"
                             android:padding="3dip" />
@@ -167,7 +167,7 @@
                             android:padding="3dip" />
                         <TextView
                             android:id="@+id/year_movie_details"
-                            android:text="1999"
+                            android:text="@string/placeholder_data"
                             android:gravity="left"
                             android:textColor="@color/white"
                             android:padding="3dip" />

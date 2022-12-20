@@ -5,20 +5,23 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import io.reactivex.Observable
+import io.reactivex.ObservableOnSubscribe
 import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.disposables.CompositeDisposable
 import ru.androidschool.intensiv.BuildConfig
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.data.Movie
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
 import ru.androidschool.intensiv.databinding.FragmentSearchBinding
+import ru.androidschool.intensiv.extension.extObservable
 import ru.androidschool.intensiv.network.MovieApiClient
-import ru.androidschool.intensiv.ui.afterTextChanged
 import ru.androidschool.intensiv.ui.feed.FeedFragment.Companion.KEY_SEARCH
 import ru.androidschool.intensiv.ui.tvshows.TvShowsItem
 import timber.log.Timber
@@ -33,6 +36,7 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
     // onDestroyView.
     private val binding get() = _binding!!
     private val searchBinding get() = _searchBinding!!
+    val compositeDisposable = CompositeDisposable()
 
     private val adapter by lazy {
         GroupAdapter<GroupieViewHolder>()
@@ -48,48 +52,43 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
         return binding.root
     }
 
+    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
         val searchTerm = requireArguments().getString(KEY_SEARCH)
         searchBinding.searchToolbar.setText(searchTerm)
 
-        searchBinding.searchToolbar.binding.searchEditText.afterTextChanged {
-            Timber.d(it.toString())
-            if (it.toString().length > MIN_LENGTH) {
-                getSearchMovie(it.toString())
-            }
+// реализация поиска. Работает с задержкой на нужное время!!
+// пришлось два раза создавать поток и подписыватсья для реализации задержки,
+// возможно можно сделать проще, но пока оставлю так т.к. есть новая домашка
+        val onTextChangeObservable by lazy {
+            Observable.create(
+                ObservableOnSubscribe<String> { emiter ->
+                    searchBinding.searchToolbar.binding.searchEditText.doAfterTextChanged { text ->
+                        emiter.onNext(text.toString())
+                    }
+                }
+            )
         }
-    }
+        val onTextChangeWithOperatorObservable by lazy {
+            onTextChangeObservable
+                .debounce(500, TimeUnit.MILLISECONDS)
+                .map { it.trim() }
+                .filter { it.length > MIN_LENGTH }
+                .observeOn(AndroidSchedulers.mainThread())
+        }
 
-    override fun onDestroyView() {
-        super.onDestroyView()
-        _binding = null
-        _searchBinding = null
-    }
+        compositeDisposable.add(onTextChangeWithOperatorObservable
+            .extObservable()
+            .subscribe { query ->
+            val getSearchMovie = MovieApiClient.apiClient.getSearchMovie(
+                BuildConfig.THE_MOVIE_DATABASE_API,
+                "ru", query
+            )
 
-    companion object {
-        const val MIN_LENGTH = 3
-        const val RATING = "rating"
-        const val KEY_TITLE = "title"
-        const val OVERVIEW = "overview"
-        const val POSTERPATH = "posterPath"
-        const val ID = "id"
-    }
-
-    //Сделал поиск с использованием RxJava. Понимаю что надо доделывать с реализацией onNext??
-    // и удалить для очистки памяти при выходе, го пока пробую как и что.
-    @SuppressLint("CheckResult")
-    fun getSearchMovie(query: String) {
-        val getSearchMovie = MovieApiClient.apiClient.getSearchMovie(
-            BuildConfig.THE_MOVIE_DATABASE_API,
-            "ru", query)
-
-        getSearchMovie
-            .debounce(500, TimeUnit.MILLISECONDS)
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
-            .subscribe(
-                { result ->
+            getSearchMovie
+                .extObservable()
+                .subscribe({ result ->
                 val movieResulrSerch = result.results
 
                 val listMovieResult = movieResulrSerch.map {
@@ -102,6 +101,23 @@ class SearchFragment : Fragment(R.layout.fragment_search) {
                 // Логируем ошибку
                 Timber.tag("TAGERROR").e(error.toString())
             })
+        })
+    }
+
+    override fun onDestroyView() {
+        super.onDestroyView()
+        _binding = null
+        _searchBinding = null
+        compositeDisposable.clear()
+    }
+
+    companion object {
+        const val MIN_LENGTH = 3
+        const val RATING = "rating"
+        const val KEY_TITLE = "title"
+        const val OVERVIEW = "overview"
+        const val POSTERPATH = "posterPath"
+        const val ID = "id"
     }
 
     private val options = navOptions {

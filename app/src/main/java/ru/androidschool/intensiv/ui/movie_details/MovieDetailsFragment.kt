@@ -10,12 +10,11 @@ import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import ru.androidschool.intensiv.MainActivity
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.databinding.MovieDetailsFragmentBinding
 import ru.androidschool.intensiv.databinding.MovieDetailsHeaderBinding
+import ru.androidschool.intensiv.extension.extSingle
 import ru.androidschool.intensiv.network.MovieApiClient
 import timber.log.Timber
 
@@ -100,8 +99,7 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
             requireArguments().getInt(ID)
         )
         getMovieDetails
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .extSingle()
             .subscribe({ detail ->
                 val studio = detail.productionCompanies
                 val genre = detail.genres
@@ -129,8 +127,7 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         val getCastActor = MovieApiClient.apiClient.getCastActor(
             requireArguments().getInt(ID))
         getCastActor
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .extSingle()
             .subscribe({ actor ->
                 val movieActor = actor.cast
 

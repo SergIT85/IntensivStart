@@ -8,13 +8,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
+import io.reactivex.disposables.CompositeDisposable
 import ru.androidschool.intensiv.BuildConfig.THE_MOVIE_DATABASE_API
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.data.Movie
 import ru.androidschool.intensiv.databinding.FeedFragmentBinding
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
+import ru.androidschool.intensiv.extension.extSingle
 import ru.androidschool.intensiv.network.MovieApiClient
 import ru.androidschool.intensiv.ui.afterTextChanged
 import timber.log.Timber
@@ -23,6 +23,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
 
     private var _binding: FeedFragmentBinding? = null
     private var _searchBinding: FeedHeaderBinding? = null
+    val compositeDisposable = CompositeDisposable()
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -67,9 +68,8 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         val getMovieNowPlaying = MovieApiClient.apiClient.getMovieNowPlaying(THE_MOVIE_DATABASE_API,
         "ru", "1")
 
-        getMovieNowPlaying
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        compositeDisposable.add(getMovieNowPlaying
+            .extSingle()
             .subscribe({ movies ->
                 val plaingMovie = movies.results
 
@@ -88,14 +88,13 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
                     error ->
                 // Логируем ошибку
                 Timber.tag("TAGERROR").e(error.toString())
-            })
+            }))
 
         val getMoviePopular = MovieApiClient.apiClient.getMoviePopular(THE_MOVIE_DATABASE_API,
             "ru", "1")
 
-        getMoviePopular
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+        compositeDisposable.add(getMoviePopular
+            .extSingle()
             .subscribe({ movies ->
                 val plaingMovie = movies.results
 
@@ -114,10 +113,10 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
                     error ->
                 // Логируем ошибку
                 Timber.tag("TAGERROR").e(error.toString())
-            })
+            }))
     }
 
-    private fun openMovieDetails(movie: Movie) {
+    open fun openMovieDetails(movie: Movie) {
         val bundle = Bundle()
 
         bundle.putString(KEY_TITLE, movie.title)
@@ -137,6 +136,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
     override fun onStop() {
         super.onStop()
         searchBinding.searchToolbar.clear()
+        compositeDisposable.clear()
     }
 
     override fun onCreateOptionsMenu(menu: Menu, inflater: MenuInflater) {
