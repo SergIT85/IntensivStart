@@ -1,29 +1,28 @@
 package ru.androidschool.intensiv.ui.tvshows
 
+import android.annotation.SuppressLint
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import retrofit2.Call
-import retrofit2.Callback
-import retrofit2.Response
 import androidx.fragment.app.Fragment
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import io.reactivex.disposables.CompositeDisposable
 import ru.androidschool.intensiv.BuildConfig.THE_MOVIE_DATABASE_API
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.MockRepository
 import ru.androidschool.intensiv.data.Movie
-import ru.androidschool.intensiv.data.MovieResponse
 import ru.androidschool.intensiv.databinding.TvShowsFragmentBinding
+import ru.androidschool.intensiv.extension.extSingle
 import ru.androidschool.intensiv.network.MovieApiClient
 import timber.log.Timber
 
 class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
     private var _binding: TvShowsFragmentBinding? = null
     private val binding get() = _binding!!
+    private val compositeDisposable = CompositeDisposable()
 
     private val adapter by lazy {
         GroupAdapter<GroupieViewHolder>()
@@ -38,6 +37,7 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
         return binding.root
     }
 
+    @SuppressLint("CheckResult")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -46,32 +46,26 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
 
         lateinit var tvShows: List<Movie>
 
-        getTvPopular.enqueue(object : Callback<MovieResponse> {
-            override fun onFailure(call: Call<MovieResponse>, error: Throwable) {
-                // Логируем ощибку
-                Timber.tag("TAGERROR").e(error.toString())
-            }
-            override fun onResponse(call: Call<MovieResponse>, response: Response<MovieResponse>) {
-                tvShows = response.body()!!.results
+        compositeDisposable.add(getTvPopular
+            .extSingle()
+            .subscribe({ shows ->
+                val tvShows = shows.results
 
                 val tvShowsList = tvShows.map {
                     TvShowsItem(it) { movie ->
                         openMovieDetails(movie)
-                } }.toList()
+                    }
+                }.toList()
+                binding.tvShowsRecyclerView.adapter = adapter.apply { addAll(tvShowsList) }
+            }, { error ->
+                // Логируем ошибку
+                Timber.tag("TAGERROR").e(error.toString())
+            }))
+    }
 
-                Timber.tag("TAGIIIIIII").e("tvShows ------- $tvShows.toString()")
-                Timber.tag("TAGIIIIIII").e("tvShowsList+++++++++++ $tvShowsList.toString()")
-
-                    binding.tvShowsRecyclerView.adapter = adapter.apply { addAll(tvShowsList) }
-            }
-        })
-
-        val listTvShow = MockRepository.getMovies().map {
-            TvShowsItem(it) { movie ->
-                openMovieDetails(movie)
-            }
-        }.toList()
-        Timber.tag("TAGIIIIIII").e("listTvShow ============== $listTvShow.toString()")
+    override fun onStop() {
+        super.onStop()
+        compositeDisposable.clear()
     }
 
     private val options = navOptions {

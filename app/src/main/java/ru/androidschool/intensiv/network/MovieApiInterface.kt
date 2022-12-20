@@ -1,6 +1,7 @@
 package ru.androidschool.intensiv.network
 
-import retrofit2.Call
+import io.reactivex.Observable
+import io.reactivex.Single
 import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
@@ -8,6 +9,7 @@ import ru.androidschool.intensiv.BuildConfig.THE_MOVIE_DATABASE_API
 import ru.androidschool.intensiv.data.ActorResponse
 import ru.androidschool.intensiv.data.MovieDetails
 import ru.androidschool.intensiv.data.MovieResponse
+import ru.androidschool.intensiv.data.SearchResult
 
 const val LANGUAGE = "ru"
 
@@ -18,7 +20,7 @@ interface MovieApiInterface {
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("page") page: String
-    ): Call<MovieResponse>
+    ): Single<MovieResponse>
 
     // реализовать остальыне гетыры
     @GET("movie/popular/")
@@ -26,25 +28,31 @@ interface MovieApiInterface {
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("page") page: String
-    ): Call<MovieResponse>
+    ): Single<MovieResponse>
 
     @GET("tv/popular/")
     fun getTvPopular(
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("page") page: String
-    ): Call<MovieResponse>
+    ): Single<MovieResponse>
 
     @GET("movie/{movie_id}")
     fun getMovieDetails(
         @Path("movie_id") id: Int,
         @Query("api_key") apiKey: String = THE_MOVIE_DATABASE_API,
         @Query("language") language: String = LANGUAGE
-    ): Call<MovieDetails>
+    ): Single<MovieDetails>
     @GET("movie/{movie_id}/credits")
     fun getCastActor(
         @Path("movie_id") id: Int,
         @Query("api_key") apiKey: String = THE_MOVIE_DATABASE_API,
         @Query("language") language: String = LANGUAGE
-    ): Call<ActorResponse>
+    ): Single<ActorResponse>
+    @GET("search/movie")
+    fun getSearchMovie(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+        @Query("query") query: String
+    ): Observable<SearchResult>
 }
