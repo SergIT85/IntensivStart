@@ -30,6 +30,13 @@ interface MovieApiInterface {
         @Query("page") page: String
     ): Single<MovieResponse>
 
+    @GET("movie/upcoming/")
+    fun getUpcoming(
+        @Query("api_key") apiKey: String,
+        @Query("language") language: String,
+        @Query("page") page: String
+    ): Single<MovieResponse>
+
     @GET("tv/popular/")
     fun getTvPopular(
         @Query("api_key") apiKey: String,

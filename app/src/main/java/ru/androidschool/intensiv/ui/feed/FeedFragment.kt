@@ -78,7 +78,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
                     openMovieDetails(movie)
                 }
                 }.let {
-                    MainCardContainer(R.string.popular,
+                    MainCardContainer(R.string.recommended,
                     it.toList())
                 })
                 movies.let {
@@ -114,6 +114,31 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
                     error ->
                 // Логируем ошибку
                 Timber.tag("TAGERROR").e(error.toString())
+            }))
+
+        //добавил т.к. забыл сделать в прошлых домашках
+        val getUpcoming = MovieApiClient.apiClient.getUpcoming(THE_MOVIE_DATABASE_API, "ru",
+        "1")
+
+        compositeDisposable.add(getUpcoming
+            .extSingle()
+            .subscribe({ movies ->
+                val upcomingMovies = movies.results
+
+                val listUpcomingMovies = listOf(upcomingMovies.map {
+                    MovieItem(it) {movie ->
+                        openMovieDetails(movie)
+                    }
+                }.let {
+                    MainCardContainer(R.string.upcoming,
+                    it.toList())
+                })
+                movies.let {
+                    binding.moviesRecyclerView.adapter = adapter.apply { addAll(listUpcomingMovies) }
+                }
+            }, {
+                    error -> Timber.tag("TAGERROR").e(error.toString())
+
             }))
     }
 
