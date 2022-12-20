@@ -83,6 +83,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
                 })
                 movies.let {
                     binding.moviesRecyclerView.adapter = adapter.apply { addAll(listMovie) }
+                    binding.progressBar.visibility = View.INVISIBLE
                 }
             }, {
                     error ->

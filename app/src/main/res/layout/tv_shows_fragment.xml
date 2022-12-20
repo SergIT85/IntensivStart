@@ -17,4 +17,17 @@
         app:layout_behavior="@string/appbar_scrolling_view_behavior"
         tools:listitem="@layout/tv_shows_item"/>
 
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent">
+        <ProgressBar
+            android:id="@+id/progressBar"
+            android:layout_centerInParent = "true"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:padding="24dp"
+            android:visibility="visible" />
+
+    </RelativeLayout>
+
 </FrameLayout>

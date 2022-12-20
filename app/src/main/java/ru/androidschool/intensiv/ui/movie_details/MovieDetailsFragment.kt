@@ -135,9 +135,11 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
                     ActorItem(it) { }
                 }.toList()
                 binding.itemsContainerActor.adapter = adapter.apply { addAll(actorList) }
+                binding.progressBar.visibility = View.INVISIBLE
             }, { error ->
                 // Логируем ошибку
                 Timber.tag("TAGERROR").e(error.toString())
+                binding.progressBar.visibility = View.INVISIBLE
             })
     }
 }
