@@ -8,10 +8,13 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import io.reactivex.Observable
+import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
+import io.reactivex.functions.Function3
 import ru.androidschool.intensiv.BuildConfig.THE_MOVIE_DATABASE_API
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.Movie
+import ru.androidschool.intensiv.data.*
 import ru.androidschool.intensiv.databinding.FeedFragmentBinding
 import ru.androidschool.intensiv.databinding.FeedHeaderBinding
 import ru.androidschool.intensiv.extension.extSingle
@@ -65,7 +68,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         }
 
         // Получаем Single
-        val getMovieNowPlaying = MovieApiClient.apiClient.getMovieNowPlaying(THE_MOVIE_DATABASE_API,
+        /*val getMovieNowPlaying = MovieApiClient.apiClient.getMovieNowPlaying(THE_MOVIE_DATABASE_API,
         "ru", "1")
 
         compositeDisposable.add(getMovieNowPlaying
@@ -139,7 +142,86 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
             }, {
                     error -> Timber.tag("TAGERROR").e(error.toString())
 
-            }))
+            }))*/
+
+        /// Не могу найти ошибку в логике работы zip или что то навоял непонятное?
+        // но запросы не уходят хотя должны. Т.к. Отроабатываются.
+
+        val nawPlaing = Single.create<MovieResponse> {
+            MovieApiClient.apiClient.getMovieNowPlaying(
+                THE_MOVIE_DATABASE_API, "ru", "1"
+            )
+        }
+        val getUpcomings = Single.create<MovieResponse2> {
+            MovieApiClient.apiClient.getUpcoming(
+                THE_MOVIE_DATABASE_API, "ru", "1"
+            )
+        }
+        val getMoviePopulars = Single.create<MovieResponse3> {
+            MovieApiClient.apiClient.getMoviePopular(
+                THE_MOVIE_DATABASE_API, "ru", "1"
+            )
+            Timber.tag("TAGERRORRR").e("Работает внутри getMoviePopulars getUpcomings выдаёт: $getUpcomings")
+        }
+
+        val allMovieDisposable = Single.zip(nawPlaing, getUpcomings, getMoviePopulars,
+            Function3<MovieResponse, MovieResponse2, MovieResponse3, AllMovieResponse>{
+                    t1: MovieResponse,
+                    t2: MovieResponse2,
+                    t3: MovieResponse3 ->
+                AllMovieResponse(t1, t2, t3)
+                })
+
+        compositeDisposable.add(allMovieDisposable
+            .extSingle()
+            .subscribe({movies ->
+                val internalNawPlaing = movies.movieResponse.results
+                val internalUpcomings = movies.movieResponse2.results
+                val internalPopular = movies.movieResponse3.results
+
+                Timber.tag("TAGERRORRR").e("НЕ?? Работает внутри Подписчика")
+
+                val listPopular = listOf(internalPopular.map {
+                    MovieItem(it) {movie ->
+                        openMovieDetails(movie)
+                    }
+                }.let {
+                    MainCardContainer(R.string.upcoming,
+                        it.toList())
+                })
+
+                val listUpcomings = listOf(internalUpcomings.map {
+                    MovieItem(it) {movie ->
+                        openMovieDetails(movie)
+                    }
+                }.let {
+                    MainCardContainer(R.string.upcoming,
+                        it.toList())
+                })
+
+                val listNawPlaing = listOf(internalNawPlaing.map {
+                    MovieItem(it) {movie ->
+                        openMovieDetails(movie)
+                    }
+                }.let {
+                    MainCardContainer(R.string.upcoming,
+                        it.toList())
+                })
+
+
+                movies.let {
+                    binding.moviesRecyclerView.adapter = adapter.apply { addAll(listNawPlaing) }
+                }
+                movies.let {
+                    binding.moviesRecyclerView.adapter = adapter.apply { addAll(listUpcomings) }
+                }
+                movies.let {
+                    binding.moviesRecyclerView.adapter = adapter.apply { addAll(listPopular) }
+                }
+            }, {
+                    error -> Timber.tag("TAGERROR").e(error.toString())
+            })
+        )
     }
 
     open fun openMovieDetails(movie: Movie) {

@@ -6,10 +6,7 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.androidschool.intensiv.BuildConfig.THE_MOVIE_DATABASE_API
-import ru.androidschool.intensiv.data.ActorResponse
-import ru.androidschool.intensiv.data.MovieDetails
-import ru.androidschool.intensiv.data.MovieResponse
-import ru.androidschool.intensiv.data.SearchResult
+import ru.androidschool.intensiv.data.*
 
 const val LANGUAGE = "ru"
 
@@ -28,14 +25,14 @@ interface MovieApiInterface {
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("page") page: String
-    ): Single<MovieResponse>
+    ): Single<MovieResponse3>
 
     @GET("movie/upcoming/")
     fun getUpcoming(
         @Query("api_key") apiKey: String,
         @Query("language") language: String,
         @Query("page") page: String
-    ): Single<MovieResponse>
+    ): Single<MovieResponse2>
 
     @GET("tv/popular/")
     fun getTvPopular(
