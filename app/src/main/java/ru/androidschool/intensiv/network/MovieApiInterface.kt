@@ -6,28 +6,33 @@ import retrofit2.http.GET
 import retrofit2.http.Path
 import retrofit2.http.Query
 import ru.androidschool.intensiv.BuildConfig.THE_MOVIE_DATABASE_API
-import ru.androidschool.intensiv.data.ActorResponse
-import ru.androidschool.intensiv.data.MovieDetails
-import ru.androidschool.intensiv.data.MovieResponse
-import ru.androidschool.intensiv.data.SearchResult
+import ru.androidschool.intensiv.data.*
 
 const val LANGUAGE = "ru"
+const val PAGE = "1"
 
 interface MovieApiInterface {
 
     @GET("movie/now_playing/")
     fun getMovieNowPlaying(
-        @Query("api_key") apiKey: String,
-        @Query("language") language: String,
-        @Query("page") page: String
+        @Query("api_key") apiKey: String = THE_MOVIE_DATABASE_API,
+        @Query("language") language: String = LANGUAGE,
+        @Query("page") page: String = PAGE
     ): Single<MovieResponse>
 
     // реализовать остальыне гетыры
     @GET("movie/popular/")
     fun getMoviePopular(
-        @Query("api_key") apiKey: String,
-        @Query("language") language: String,
-        @Query("page") page: String
+        @Query("api_key") apiKey: String = THE_MOVIE_DATABASE_API,
+        @Query("language") language: String = LANGUAGE,
+        @Query("page") page: String = PAGE
+    ): Single<MovieResponse>
+
+    @GET("movie/upcoming/")
+    fun getUpcoming(
+        @Query("api_key") apiKey: String = THE_MOVIE_DATABASE_API,
+        @Query("language") language: String = LANGUAGE,
+        @Query("page") page: String = PAGE
     ): Single<MovieResponse>
 
     @GET("tv/popular/")

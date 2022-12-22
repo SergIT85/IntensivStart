@@ -57,6 +57,7 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
                     }
                 }.toList()
                 binding.tvShowsRecyclerView.adapter = adapter.apply { addAll(tvShowsList) }
+                binding.progressBar.visibility = View.INVISIBLE
             }, { error ->
                 // Логируем ошибку
                 Timber.tag("TAGERROR").e(error.toString())
