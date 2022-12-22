@@ -21,6 +21,7 @@ import ru.androidschool.intensiv.extension.extSingle
 import ru.androidschool.intensiv.network.MovieApiClient
 import ru.androidschool.intensiv.ui.afterTextChanged
 import timber.log.Timber
+import java.security.Key
 
 class FeedFragment : Fragment(R.layout.feed_fragment) {
 
@@ -67,150 +68,33 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
             }
         }
 
-        // Получаем Single
-        /*val getMovieNowPlaying = MovieApiClient.apiClient.getMovieNowPlaying(THE_MOVIE_DATABASE_API,
-        "ru", "1")
+        //Сделал с hashMap! ура=)
 
-        compositeDisposable.add(getMovieNowPlaying
-            .extSingle()
-            .subscribe({ movies ->
-                val plaingMovie = movies.results
+        val nawPlaing = MovieApiClient.apiClient.getMovieNowPlaying()
 
-                val listMovie = listOf(plaingMovie.map {
-                MovieItem(it) { movie ->
-                    openMovieDetails(movie)
-                }
-                }.let {
-                    MainCardContainer(R.string.recommended,
-                    it.toList())
-                })
-                movies.let {
-                    binding.moviesRecyclerView.adapter = adapter.apply { addAll(listMovie) }
-                    binding.progressBar.visibility = View.INVISIBLE
-                }
-            }, {
-                    error ->
-                // Логируем ошибку
-                Timber.tag("TAGERROR").e(error.toString())
-            }))
+        val getUpcomings = MovieApiClient.apiClient.getUpcoming()
 
-        val getMoviePopular = MovieApiClient.apiClient.getMoviePopular(THE_MOVIE_DATABASE_API,
-            "ru", "1")
+        val getMoviePopulars = MovieApiClient.apiClient.getMoviePopular()
 
-        compositeDisposable.add(getMoviePopular
-            .extSingle()
-            .subscribe({ movies ->
-                val plaingMovie = movies.results
+        val hashMapOllMovie = Single.zip(nawPlaing, getUpcomings,getMoviePopulars, Function3<
+                MovieResponse,
+                MovieResponse,
+                MovieResponse, HashMap<String, List<Movie>>> {
+                    t1: MovieResponse, t2: MovieResponse, t3: MovieResponse ->
+            hashMapOf("NawPlaing" to t1.results, "Upcomings" to t2.results, "Popular" to t3.results)
+        })
 
-                val listMovie = listOf(plaingMovie.map {
-                    MovieItem(it) { movie ->
-                        openMovieDetails(movie)
-                    }
-                }.let {
-                    MainCardContainer(R.string.popular,
-                        it.toList())
-                })
-                movies.let {
-                    binding.moviesRecyclerView.adapter = adapter.apply { addAll(listMovie) }
-                }
-            }, {
-                    error ->
-                // Логируем ошибку
-                Timber.tag("TAGERROR").e(error.toString())
-            }))
-
-        //добавил т.к. забыл сделать в прошлых домашках
-        val getUpcoming = MovieApiClient.apiClient.getUpcoming(THE_MOVIE_DATABASE_API, "ru",
-        "1")
-
-        compositeDisposable.add(getUpcoming
-            .extSingle()
-            .subscribe({ movies ->
-                val upcomingMovies = movies.results
-
-                val listUpcomingMovies = listOf(upcomingMovies.map {
-                    MovieItem(it) {movie ->
-                        openMovieDetails(movie)
-                    }
-                }.let {
-                    MainCardContainer(R.string.upcoming,
-                    it.toList())
-                })
-                movies.let {
-                    binding.moviesRecyclerView.adapter = adapter.apply { addAll(listUpcomingMovies) }
-                }
-            }, {
-                    error -> Timber.tag("TAGERROR").e(error.toString())
-
-            }))*/
-
-        /// Не могу найти ошибку в логике работы zip или что то навоял непонятное?
-        // но запросы не уходят хотя должны. Т.к. Отроабатываются.
-
-        val nawPlaing = Single.create<MovieResponse> {
-            MovieApiClient.apiClient.getMovieNowPlaying(
-                THE_MOVIE_DATABASE_API, "ru", "1"
-            )
-        }
-        val getUpcomings = Single.create<MovieResponse2> {
-            MovieApiClient.apiClient.getUpcoming(
-                THE_MOVIE_DATABASE_API, "ru", "1"
-            )
-        }
-        val getMoviePopulars = Single.create<MovieResponse3> {
-            MovieApiClient.apiClient.getMoviePopular(
-                THE_MOVIE_DATABASE_API, "ru", "1"
-            )
-            Timber.tag("TAGERRORRR").e("Работает внутри getMoviePopulars getUpcomings выдаёт: $getUpcomings")
-        }
-
-        val allMovieDisposable = Single.zip(nawPlaing, getUpcomings, getMoviePopulars,
-            Function3<MovieResponse, MovieResponse2, MovieResponse3, AllMovieResponse>{
-                    t1: MovieResponse,
-                    t2: MovieResponse2,
-                    t3: MovieResponse3 ->
-                AllMovieResponse(t1, t2, t3)
-                })
-
-        compositeDisposable.add(allMovieDisposable
+        compositeDisposable.add(hashMapOllMovie
             .extSingle()
             .subscribe({movies ->
-                val internalNawPlaing = movies.movieResponse.results
-                val internalUpcomings = movies.movieResponse2.results
-                val internalPopular = movies.movieResponse3.results
 
-                Timber.tag("TAGERRORRR").e("НЕ?? Работает внутри Подписчика")
-
-                val listPopular = listOf(internalPopular.map {
-                    MovieItem(it) {movie ->
-                        openMovieDetails(movie)
-                    }
-                }.let {
-                    MainCardContainer(R.string.upcoming,
-                        it.toList())
-                })
-
-                val listUpcomings = listOf(internalUpcomings.map {
-                    MovieItem(it) {movie ->
-                        openMovieDetails(movie)
-                    }
-                }.let {
-                    MainCardContainer(R.string.upcoming,
-                        it.toList())
-                })
-
-                val listNawPlaing = listOf(internalNawPlaing.map {
-                    MovieItem(it) {movie ->
-                        openMovieDetails(movie)
-                    }
-                }.let {
-                    MainCardContainer(R.string.upcoming,
-                        it.toList())
-                })
-
+                val listPopular = createMainCardContainer(movies.getValue("Popular"), R.string.popular)
+                val listUpcomings = createMainCardContainer(movies.getValue("Upcomings"), R.string.upcoming)
+                val listNawPlaing = createMainCardContainer(movies.getValue("Popular"), R.string.recommended)
 
                 movies.let {
                     binding.moviesRecyclerView.adapter = adapter.apply { addAll(listNawPlaing) }
+                    binding.progressBar.visibility = View.INVISIBLE
                 }
                 movies.let {
                     binding.moviesRecyclerView.adapter = adapter.apply { addAll(listUpcomings) }
@@ -224,7 +108,18 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
         )
     }
 
-    open fun openMovieDetails(movie: Movie) {
+    fun createMainCardContainer(listMovie: List<Movie>, tipeMovie: Int): List<MainCardContainer> {
+        val list = listOf(listMovie.map {
+            MovieItem(it) {movie ->
+                openMovieDetails(movie)
+            }
+        }.let {
+            MainCardContainer(tipeMovie, it.toList())
+        })
+        return list
+    }
+
+    fun openMovieDetails(movie: Movie) {
         val bundle = Bundle()
 
         bundle.putString(KEY_TITLE, movie.title)

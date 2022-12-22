@@ -9,30 +9,31 @@ import ru.androidschool.intensiv.BuildConfig.THE_MOVIE_DATABASE_API
 import ru.androidschool.intensiv.data.*
 
 const val LANGUAGE = "ru"
+const val PAGE = "1"
 
 interface MovieApiInterface {
 
     @GET("movie/now_playing/")
     fun getMovieNowPlaying(
-        @Query("api_key") apiKey: String,
-        @Query("language") language: String,
-        @Query("page") page: String
+        @Query("api_key") apiKey: String = THE_MOVIE_DATABASE_API,
+        @Query("language") language: String = LANGUAGE,
+        @Query("page") page: String = PAGE
     ): Single<MovieResponse>
 
     // реализовать остальыне гетыры
     @GET("movie/popular/")
     fun getMoviePopular(
-        @Query("api_key") apiKey: String,
-        @Query("language") language: String,
-        @Query("page") page: String
-    ): Single<MovieResponse3>
+        @Query("api_key") apiKey: String = THE_MOVIE_DATABASE_API,
+        @Query("language") language: String = LANGUAGE,
+        @Query("page") page: String = PAGE
+    ): Single<MovieResponse>
 
     @GET("movie/upcoming/")
     fun getUpcoming(
-        @Query("api_key") apiKey: String,
-        @Query("language") language: String,
-        @Query("page") page: String
-    ): Single<MovieResponse2>
+        @Query("api_key") apiKey: String = THE_MOVIE_DATABASE_API,
+        @Query("language") language: String = LANGUAGE,
+        @Query("page") page: String = PAGE
+    ): Single<MovieResponse>
 
     @GET("tv/popular/")
     fun getTvPopular(
