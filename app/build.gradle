@@ -1,6 +1,6 @@
 apply plugin: 'com.android.application'
 apply plugin: 'kotlin-android'
-
+apply plugin: 'kotlin-kapt'
 apply from: "../ktlint.gradle"
 
 def keystorePropertiesFile = rootProject.file("keystore.properties")
@@ -89,4 +89,14 @@ dependencies {
     // Для использования RxJava c Retrofit
     implementation "com.squareup.retrofit2:adapter-rxjava2:2.7.1"
     implementation 'jp.co.cyberagent.android.gpuimage:gpuimage-library:1.4.1'
+
+    // ROOM
+    def room_version = "2.4.3"
+
+    implementation("androidx.room:room-runtime:$room_version")
+    kapt("androidx.room:room-compiler:$room_version")
+    // RxJava support for Room
+    implementation 'androidx.room:room-rxjava2:2.4.3'
+    implementation "android.arch.persistence.room:rxjava2:1.1.1"
+    implementation 'io.reactivex.rxjava2:rxandroid:2.1.1'
 }

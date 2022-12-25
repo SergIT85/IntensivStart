@@ -10,8 +10,12 @@ import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
+import io.reactivex.android.schedulers.AndroidSchedulers
+import io.reactivex.schedulers.Schedulers
 import ru.androidschool.intensiv.MainActivity
 import ru.androidschool.intensiv.R
+import ru.androidschool.intensiv.data.MovieDatabase
+import ru.androidschool.intensiv.data.MovieEntity
 import ru.androidschool.intensiv.databinding.MovieDetailsFragmentBinding
 import ru.androidschool.intensiv.databinding.MovieDetailsHeaderBinding
 import ru.androidschool.intensiv.extension.extSingle
@@ -85,9 +89,49 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         val ratingNull = 5F
         binding.detailMovieRating.rating = arguments?.getFloat("rating") ?: ratingNull
 
+        // БД
+        val databaseMovie = MovieDatabase.get(requireContext())
+        // Кнопка лайка
         val likeMovie = binding.imageViewLike
+
+        databaseMovie.movieDao()
+            .exists(requireArguments().getInt("id").toLong())
+            .subscribeOn(Schedulers.io())
+            .observeOn(AndroidSchedulers.mainThread())
+            .subscribe({ equal ->
+                likeMovie.isChecked = equal
+            }, {
+                    error -> Timber.tag("TAGERROR").e(error.toString())
+            })
+
         likeMovie.setOnClickListener {
-            likeMovie.isSelected = !likeMovie.isSelected
+            if (!likeMovie.isChecked) {
+                likeMovie.isChecked = false
+                databaseMovie.movieDao().deleteById(requireArguments().getInt("id").toLong())
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ databaseMovie.movieDao()
+                        .deleteById(requireArguments().getInt("id").toLong())
+                    }, {
+                            error -> Timber.tag("TAGERROR").e(error.toString())
+                    })
+            } else {
+                likeMovie.isChecked = true
+                val movieEntity = MovieEntity(
+                    requireArguments().getInt("id").toLong(),
+                    requireArguments().getString("title"),
+                    requireArguments().getString("posterPath"),
+                    requireArguments().getString("overview"),
+                    requireArguments().getFloat("rating")
+                    )
+                databaseMovie.movieDao().save(movieEntity)
+                    .subscribeOn(Schedulers.io())
+                    .observeOn(AndroidSchedulers.mainThread())
+                    .subscribe({ databaseMovie.movieDao().save(movieEntity)
+                    }, {
+                            error -> Timber.tag("TAGERROR").e(error.toString())
+                    })
+            }
         }
 
         // .кнопка просмотра. пока с тостом вместо просмотра
