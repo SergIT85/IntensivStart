@@ -1,6 +1,7 @@
 package ru.androidschool.intensiv.extension
 
 import android.annotation.SuppressLint
+import io.reactivex.Completable
 import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.android.schedulers.AndroidSchedulers
@@ -14,6 +15,11 @@ fun <T> Observable<T>.extObservable(): Observable<T> {
 
 @SuppressLint("CheckResult")
 fun <T> Single<T>.extSingle(): Single<T> {
+    return this.subscribeOn(Schedulers.io())
+        .observeOn(AndroidSchedulers.mainThread())
+}
+
+fun Completable.extCompletable(): Completable {
     return this.subscribeOn(Schedulers.io())
         .observeOn(AndroidSchedulers.mainThread())
 }

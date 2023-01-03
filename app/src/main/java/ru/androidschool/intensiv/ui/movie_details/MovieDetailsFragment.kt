@@ -10,19 +10,23 @@ import androidx.fragment.app.Fragment
 import com.squareup.picasso.Picasso
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import io.reactivex.android.schedulers.AndroidSchedulers
-import io.reactivex.schedulers.Schedulers
 import ru.androidschool.intensiv.MainActivity
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.data.MovieDatabase
 import ru.androidschool.intensiv.data.MovieEntity
 import ru.androidschool.intensiv.databinding.MovieDetailsFragmentBinding
 import ru.androidschool.intensiv.databinding.MovieDetailsHeaderBinding
+import ru.androidschool.intensiv.extension.extCompletable
 import ru.androidschool.intensiv.extension.extSingle
 import ru.androidschool.intensiv.network.MovieApiClient
 import timber.log.Timber
 
 const val ID = "id"
+const val TITLE = "title"
+const val POSTERPATH = "posterPath"
+const val OVERVIEW = "overview"
+const val RATING = "rating"
+
 class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
     private var _binding: MovieDetailsFragmentBinding? = null
     private var _headerBinding: MovieDetailsHeaderBinding? = null
@@ -50,7 +54,7 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
 
         // Постер фильма в хэдере
         Picasso.get()
-            .load(requireArguments().getString("posterPath"))
+            .load(requireArguments().getString(POSTERPATH))
             .fit()
             .centerCrop()
             .into(headerBinding.detailsBackdrop)
@@ -64,12 +68,12 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         }
 
         // Устанавливаем Название
-        val movieTitle = requireArguments().getString("title")
+        val movieTitle = requireArguments().getString(TITLE)
 
         binding.nameFilmsInDetails.text = movieTitle
 
         // Устанавливаем описание
-        val movieDescription = requireArguments().getString("overview")
+        val movieDescription = requireArguments().getString(OVERVIEW)
         val textView = binding.descriptionMovieDetails
         binding.descriptionMovieDetails.text = movieDescription
         // Алгоритм сворачивания - разворачивания описания
@@ -87,7 +91,7 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
 
         // Устанавливаем рейтинг
         val ratingNull = 5F
-        binding.detailMovieRating.rating = arguments?.getFloat("rating") ?: ratingNull
+        binding.detailMovieRating.rating = arguments?.getFloat(RATING) ?: ratingNull
 
         // БД
         val databaseMovie = MovieDatabase.get(requireContext())
@@ -95,9 +99,8 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         val likeMovie = binding.imageViewLike
 
         databaseMovie.movieDao()
-            .exists(requireArguments().getInt("id").toLong())
-            .subscribeOn(Schedulers.io())
-            .observeOn(AndroidSchedulers.mainThread())
+            .exists(requireArguments().getInt(ID).toLong())
+            .extSingle()
             .subscribe({ equal ->
                 likeMovie.isChecked = equal
             }, {
@@ -107,26 +110,24 @@ class MovieDetailsFragment : Fragment(R.layout.movie_details_fragment) {
         likeMovie.setOnClickListener {
             if (!likeMovie.isChecked) {
                 likeMovie.isChecked = false
-                databaseMovie.movieDao().deleteById(requireArguments().getInt("id").toLong())
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                databaseMovie.movieDao().deleteById(requireArguments().getInt(ID).toLong())
+                    .extCompletable()
                     .subscribe({ databaseMovie.movieDao()
-                        .deleteById(requireArguments().getInt("id").toLong())
+                        .deleteById(requireArguments().getInt(ID).toLong())
                     }, {
                             error -> Timber.tag("TAGERROR").e(error.toString())
                     })
             } else {
                 likeMovie.isChecked = true
                 val movieEntity = MovieEntity(
-                    requireArguments().getInt("id").toLong(),
-                    requireArguments().getString("title"),
-                    requireArguments().getString("posterPath"),
-                    requireArguments().getString("overview"),
-                    requireArguments().getFloat("rating")
+                    requireArguments().getInt(ID).toLong(),
+                    requireArguments().getString(TITLE),
+                    requireArguments().getString(POSTERPATH),
+                    requireArguments().getString(OVERVIEW),
+                    requireArguments().getFloat(RATING)
                     )
                 databaseMovie.movieDao().save(movieEntity)
-                    .subscribeOn(Schedulers.io())
-                    .observeOn(AndroidSchedulers.mainThread())
+                    .extCompletable()
                     .subscribe({ databaseMovie.movieDao().save(movieEntity)
                     }, {
                             error -> Timber.tag("TAGERROR").e(error.toString())
