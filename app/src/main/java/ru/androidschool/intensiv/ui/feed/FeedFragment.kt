@@ -8,11 +8,10 @@ import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import io.reactivex.Observable
 import io.reactivex.Single
 import io.reactivex.disposables.CompositeDisposable
 import io.reactivex.functions.Function3
-import ru.androidschool.intensiv.BuildConfig.THE_MOVIE_DATABASE_API
+import ru.androidschool.intensiv.Domain.MovieEminClass
 import ru.androidschool.intensiv.R
 import ru.androidschool.intensiv.data.*
 import ru.androidschool.intensiv.databinding.FeedFragmentBinding
@@ -21,7 +20,6 @@ import ru.androidschool.intensiv.extension.extSingle
 import ru.androidschool.intensiv.network.MovieApiClient
 import ru.androidschool.intensiv.ui.afterTextChanged
 import timber.log.Timber
-import java.security.Key
 
 class FeedFragment : Fragment(R.layout.feed_fragment) {
 
@@ -68,7 +66,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
             }
         }
 
-        //Сделал с hashMap! ура=)
+        // Сделал с hashMap! ура=)
 
         val nawPlaing = MovieApiClient.apiClient.getMovieNowPlaying()
 
@@ -76,21 +74,23 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
 
         val getMoviePopulars = MovieApiClient.apiClient.getMoviePopular()
 
-        val hashMapOllMovie = Single.zip(nawPlaing, getUpcomings,getMoviePopulars, Function3<
+        val hashMapOllMovie = Single.zip(nawPlaing, getUpcomings, getMoviePopulars, Function3<
                 MovieResponse,
                 MovieResponse,
                 MovieResponse, HashMap<String, List<Movie>>> {
                     t1: MovieResponse, t2: MovieResponse, t3: MovieResponse ->
-            hashMapOf("NawPlaing" to t1.results, "Upcomings" to t2.results, "Popular" to t3.results)
+            hashMapOf(MovieEminClass.NAWPLAING.toString() to t1.results,
+                MovieEminClass.UPCOMING.toString() to t2.results,
+                MovieEminClass.POPULAR.toString() to t3.results)
         })
 
         compositeDisposable.add(hashMapOllMovie
             .extSingle()
-            .subscribe({movies ->
+            .subscribe({ movies ->
 
-                val listPopular = createMainCardContainer(movies.getValue("Popular"), R.string.popular)
-                val listUpcomings = createMainCardContainer(movies.getValue("Upcomings"), R.string.upcoming)
-                val listNawPlaing = createMainCardContainer(movies.getValue("Popular"), R.string.recommended)
+                val listPopular = createMainCardContainer(movies.getValue(MovieEminClass.POPULAR.toString()), R.string.popular)
+                val listUpcomings = createMainCardContainer(movies.getValue(MovieEminClass.UPCOMING.toString()), R.string.upcoming)
+                val listNawPlaing = createMainCardContainer(movies.getValue(MovieEminClass.NAWPLAING.toString()), R.string.recommended)
 
                 movies.let {
                     binding.moviesRecyclerView.adapter = adapter.apply { addAll(listNawPlaing) }
@@ -110,7 +110,7 @@ class FeedFragment : Fragment(R.layout.feed_fragment) {
 
     fun createMainCardContainer(listMovie: List<Movie>, tipeMovie: Int): List<MainCardContainer> {
         val list = listOf(listMovie.map {
-            MovieItem(it) {movie ->
+            MovieItem(it) { movie ->
                 openMovieDetails(movie)
             }
         }.let {

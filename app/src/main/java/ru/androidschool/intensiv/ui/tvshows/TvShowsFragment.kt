@@ -51,11 +51,13 @@ class TvShowsFragment : Fragment(R.layout.tv_shows_fragment) {
             .subscribe({ shows ->
                 val tvShows = shows.results
 
-                val tvShowsList = tvShows.map {
+                var tvShowsList: ArrayList<TvShowsItem> = ArrayList()
+                tvShowsList.clear()
+                tvShowsList = tvShows.map {
                     TvShowsItem(it) { movie ->
                         openMovieDetails(movie)
                     }
-                }.toList()
+                }.toList() as ArrayList<TvShowsItem>
                 binding.tvShowsRecyclerView.adapter = adapter.apply { addAll(tvShowsList) }
                 binding.progressBar.visibility = View.INVISIBLE
             }, { error ->
