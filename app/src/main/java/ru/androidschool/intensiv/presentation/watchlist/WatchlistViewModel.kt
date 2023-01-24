@@ -8,10 +8,9 @@ import androidx.lifecycle.viewModelScope
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.Job
 import kotlinx.coroutines.launch
-import ru.androidschool.intensiv.data.dto.Movie
-import ru.androidschool.intensiv.data.dto.MovieDatabase
-import ru.androidschool.intensiv.data.dto.MovieEntity
+
 import ru.androidschool.intensiv.data.repository.WatchlistRepository
+import ru.androidschool.intensiv.data.roomdata.MovieEntity
 import timber.log.Timber
 
 class WatchlistViewModel(private val repository: WatchlistRepository): ViewModel() {

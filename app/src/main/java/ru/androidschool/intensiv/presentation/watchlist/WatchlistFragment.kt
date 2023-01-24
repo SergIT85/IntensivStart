@@ -15,12 +15,12 @@ import androidx.navigation.navOptions
 import androidx.recyclerview.widget.GridLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
-import kotlinx.coroutines.launch
 import ru.androidschool.intensiv.R
-import ru.androidschool.intensiv.data.dto.MovieDatabase
-import ru.androidschool.intensiv.data.dto.MovieEntity
+import ru.androidschool.intensiv.data.repository.WatchlistRepository
+import ru.androidschool.intensiv.data.roomdata.MovieDatabase
+import ru.androidschool.intensiv.data.roomdata.MovieEntity
 import ru.androidschool.intensiv.databinding.FragmentWatchlistBinding
-import ru.androidschool.intensiv.extension.extSingle
+import ru.androidschool.intensiv.presentation.watchlist.MoviePreviewItem
 import timber.log.Timber
 
 class WatchlistFragment : Fragment() {
