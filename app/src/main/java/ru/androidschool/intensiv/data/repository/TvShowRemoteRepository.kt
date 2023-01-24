@@ -1,7 +1,7 @@
 package ru.androidschool.intensiv.data.repository
 
 import io.reactivex.Single
-import ru.androidschool.intensiv.Domain.repository.MovieDomainRepository
+import ru.androidschool.intensiv.domain.repository.MovieDomainRepository
 import ru.androidschool.intensiv.data.mappers.MovieMapper
 import ru.androidschool.intensiv.data.network.MovieApiClient
 import ru.androidschool.intensiv.data.vo.MovieVo
