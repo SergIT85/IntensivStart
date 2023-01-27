@@ -1,4 +1,4 @@
-package ru.androidschool.intensiv.presentation.watchlist
+package ru.androidschool.intensiv.Presentation.watchlist
 
 import android.annotation.SuppressLint
 import android.os.Bundle
@@ -6,21 +6,26 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.lifecycle.Observer
+import androidx.lifecycle.ViewModelProvider
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.GridLayoutManager
 import com.xwray.groupie.GroupAdapter
 import com.xwray.groupie.GroupieViewHolder
 import ru.androidschool.intensiv.R
+import ru.androidschool.intensiv.data.repository.WatchlistRepository
 import ru.androidschool.intensiv.data.roomdata.MovieDatabase
 import ru.androidschool.intensiv.data.roomdata.MovieEntity
 import ru.androidschool.intensiv.databinding.FragmentWatchlistBinding
-import ru.androidschool.intensiv.extension.extSingle
+import ru.androidschool.intensiv.presentation.watchlist.MoviePreviewItem
 import timber.log.Timber
 
 class WatchlistFragment : Fragment() {
 
     private var _binding: FragmentWatchlistBinding? = null
+
+    private lateinit var watchlistViewModel: WatchlistViewModel
 
     // This property is only valid between onCreateView and
     // onDestroyView.
@@ -39,7 +44,7 @@ class WatchlistFragment : Fragment() {
         return binding.root
     }
 
-    @SuppressLint("CheckResult")
+    @SuppressLint("CheckResult", "FragmentLiveDataObserve")
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
@@ -51,26 +56,37 @@ class WatchlistFragment : Fragment() {
 
         val list = databaseMovie.movieDao().getMovieEntity()
 
+        //Созаём ViewModel
+        val watchListViewModelFactory = WatchListViewModelFactory(WatchlistRepository(databaseMovie))
+        watchlistViewModel = ViewModelProvider(this,
+            watchListViewModelFactory)[WatchlistViewModel::class.java]
+
         var arrayListMovie: ArrayList<MoviePreviewItem> = ArrayList()
 
-        databaseMovie.movieDao().getMovieEntity()
-            .extSingle()
-            .subscribe({ movie ->
-                arrayListMovie.clear()
-                arrayListMovie = movie.map {
-                    MoviePreviewItem(it) { action ->
-                        openMovieDetails(action)
-                    }
-                } as ArrayList<MoviePreviewItem>
-                binding.moviesRecyclerView.adapter = adapter.apply { addAll(arrayListMovie) }
-            }, {
-                    error -> Timber.tag("TAGERROR").e(error.toString())
-            })
+        // Работает. через MVVM и LiveData
+        watchlistViewModel.watchlistViewModel.observe(this, Observer { listMovie ->
+            arrayListMovie.clear()
+
+            arrayListMovie = listMovie.map {
+                MoviePreviewItem(it) {action ->
+                    openMovieDetails(action)
+                }
+            } as ArrayList<MoviePreviewItem>
+            adapter.clear()
+            binding.moviesRecyclerView.adapter = adapter.apply { addAll(arrayListMovie) }
+            Timber.tag("TAGERRORINVIEW").e(listMovie.toString())
+        })
+
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.clear()
     }
 
     companion object {
