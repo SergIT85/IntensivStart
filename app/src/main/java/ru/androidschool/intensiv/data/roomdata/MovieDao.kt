@@ -4,6 +4,7 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.room.*
 import io.reactivex.Completable
+import io.reactivex.Observable
 import io.reactivex.Single
 import ru.androidschool.intensiv.data.roomdata.MovieEntity
 
@@ -19,7 +20,7 @@ interface MovieDao {
     fun getMovieEntity(): Single<List<MovieEntity>>
 
     @Query("SELECT * FROM MovieEntity")
-    fun getListViewModelMovieEntity(): LiveData<List<MovieEntity>>
+    fun getListViewModelMovieEntity(): Observable<List<MovieEntity>>
 
     @Query("DELETE FROM MovieEntity WHERE movieId = :movieId")
     fun deleteById(movieId: Long): Completable

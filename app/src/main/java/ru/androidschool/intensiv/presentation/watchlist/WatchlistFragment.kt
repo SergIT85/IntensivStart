@@ -8,8 +8,6 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.Observer
 import androidx.lifecycle.ViewModelProvider
-import androidx.lifecycle.lifecycleScope
-import androidx.lifecycle.viewModelScope
 import androidx.navigation.fragment.findNavController
 import androidx.navigation.navOptions
 import androidx.recyclerview.widget.GridLayoutManager
@@ -65,11 +63,8 @@ class WatchlistFragment : Fragment() {
 
         var arrayListMovie: ArrayList<MoviePreviewItem> = ArrayList()
 
-
-        // Работает. Подписывается, но! при изменении базы фильмы дублируются! Не могу понять почему
-        // Пробовал и через LiveData и Mutable и создавать Live data в ViewModel и в Repository
-        // итого либо не обновляется вообще, либо дублируется.
-        watchlistViewModel.getWatchlistFromViewModelTwo().observe(this, Observer { listMovie ->
+        // Работает. через MVVM и LiveData
+        watchlistViewModel.watchlistViewModel.observe(this, Observer { listMovie ->
             arrayListMovie.clear()
 
             arrayListMovie = listMovie.map {
@@ -77,38 +72,21 @@ class WatchlistFragment : Fragment() {
                     openMovieDetails(action)
                 }
             } as ArrayList<MoviePreviewItem>
+            adapter.clear()
             binding.moviesRecyclerView.adapter = adapter.apply { addAll(arrayListMovie) }
             Timber.tag("TAGERRORINVIEW").e(listMovie.toString())
         })
 
-        //оставил пока не сделаю как надо.
-        /*viewLifecycleOwner.lifecycleScope.launch {
-            binding.moviesRecyclerView.adapter = adapter.apply { addAll(watchlistViewModel.
-            getWatchlistFromViewModelTwo()) }
-        }*/
-
-        //watchlistViewModel.getWatchlistFromViewModelTwo()
-
-        /*var arrayListMovie: ArrayList<MoviePreviewItem> = ArrayList()
-
-        databaseMovie.movieDao().getMovieEntity()
-            .extSingle()
-            .subscribe({ movie ->
-                arrayListMovie.clear()
-                arrayListMovie = movie.map {
-                    MoviePreviewItem(it) { action ->
-                        openMovieDetails(action)
-                    }
-                } as ArrayList<MoviePreviewItem>
-                binding.moviesRecyclerView.adapter = adapter.apply { addAll(arrayListMovie) }
-            }, {
-                    error -> Timber.tag("TAGERROR").e(error.toString())
-            })*/
     }
 
     override fun onDestroyView() {
         super.onDestroyView()
         _binding = null
+    }
+
+    override fun onStop() {
+        super.onStop()
+        adapter.clear()
     }
 
     companion object {
